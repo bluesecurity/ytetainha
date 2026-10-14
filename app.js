@@ -9,12 +9,34 @@
   const HOTLINE_DISPLAY = '0793.803.905';
   const ZALO_URL = 'https://zalo.me/0793803905';
 
-  // State cho bộ tạo tin nhắn tư vấn nhanh
+  // State cho bộ tạo tin nhắn tư vấn nhanh (có lưu nháp sessionStorage chống mất dữ liệu khi thoát dở chừng)
+  const DRAFT_STORAGE_KEY = 'ytetainha_consult_draft_v1';
   const state = {
     ward: 'Phường Vũng Tàu',
     services: new Set(['Theo dõi huyết áp & đường huyết định kỳ']),
     note: ''
   };
+  let isActionLocked = false;
+
+  function saveDraftState() {
+    try {
+      sessionStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify({
+        ward: state.ward, services: Array.from(state.services), note: state.note
+      }));
+    } catch (_) {}
+  }
+
+  function loadDraftState() {
+    try {
+      const parsed = JSON.parse(sessionStorage.getItem(DRAFT_STORAGE_KEY) || 'null');
+      if (!parsed) return;
+      if (typeof parsed.ward === 'string' && parsed.ward.trim()) state.ward = parsed.ward;
+      if (Array.isArray(parsed.services) && parsed.services.length > 0) {
+        state.services = new Set(parsed.services.filter((s) => typeof s === 'string' && s.trim()));
+      }
+      if (typeof parsed.note === 'string') state.note = parsed.note.slice(0, 220);
+    } catch (_) {}
+  }
 
   /**
    * Che mờ số điện thoại hoặc ghi chú nếu chứa chuỗi số (Runtime Privacy Pillar 4)
@@ -121,18 +143,27 @@
    * Khởi tạo các nút chọn Khu vực (Ward) và Dịch vụ (Services)
    */
   function initQuickBuilder() {
+    loadDraftState();
+
     const wardBtns = document.querySelectorAll('[data-ward-select]');
     wardBtns.forEach((btn) => {
+      const btnWard = btn.getAttribute('data-ward-select');
+      btn.setAttribute('aria-pressed', btnWard === state.ward ? 'true' : 'false');
       btn.addEventListener('click', () => {
-        state.ward = btn.getAttribute('data-ward-select') || 'Phường Vũng Tàu';
+        state.ward = btnWard || 'Phường Vũng Tàu';
         wardBtns.forEach((b) => b.setAttribute('aria-pressed', 'false'));
         btn.setAttribute('aria-pressed', 'true');
+        saveDraftState();
         updatePreviewUI();
       });
     });
 
     const serviceBtns = document.querySelectorAll('[data-service-chip]');
     serviceBtns.forEach((btn) => {
+      const chipName = btn.getAttribute('data-service-chip');
+      if (chipName) {
+        btn.setAttribute('aria-pressed', state.services.has(chipName) ? 'true' : 'false');
+      }
       btn.addEventListener('click', () => {
         const serviceName = btn.getAttribute('data-service-chip');
         if (!serviceName) return;
@@ -146,14 +177,17 @@
           state.services.add(serviceName);
           btn.setAttribute('aria-pressed', 'true');
         }
+        saveDraftState();
         updatePreviewUI();
       });
     });
 
     const noteInput = document.getElementById('consult-note-input');
     if (noteInput) {
+      if (state.note) noteInput.value = state.note;
       noteInput.addEventListener('input', (e) => {
         state.note = e.target.value || '';
+        saveDraftState();
         updatePreviewUI();
       });
     }
@@ -170,6 +204,7 @@
             const matches = btn.getAttribute('data-service-chip') === targetService;
             btn.setAttribute('aria-pressed', matches ? 'true' : 'false');
           });
+          saveDraftState();
           updatePreviewUI();
         }
         const section = document.getElementById('dat-lich-tu-van');
@@ -180,10 +215,12 @@
       });
     });
 
-    // Nút Copy nội dung & Mở Zalo
+    // Nút Copy nội dung & Mở Zalo (có chống bấm đúp & chống lỗi mất mạng)
     const zaloSubmitBtn = document.getElementById('btn-submit-zalo');
     if (zaloSubmitBtn) {
       zaloSubmitBtn.addEventListener('click', async () => {
+        if (isActionLocked) return;
+
         const consentBox = document.getElementById('consent-checkbox');
         if (consentBox && !consentBox.checked) {
           showToast('Vui lòng tích chọn đồng ý điều khoản tư vấn trước khi gửi yêu cầu.');
@@ -191,9 +228,22 @@
           return;
         }
 
+        isActionLocked = true;
+        zaloSubmitBtn.setAttribute('aria-busy', 'true');
+        setTimeout(() => {
+          isActionLocked = false;
+          zaloSubmitBtn.removeAttribute('aria-busy');
+        }, 1200);
+
         const msg = buildConsultMessage();
         await copyToClipboard(msg);
         trackConversion('click_zalo_consult', { note: state.note });
+
+        if (navigator.onLine === false) {
+          showToast(`Thiết bị đang mất mạng! Đã sao chép nội dung — vui lòng gọi trực tiếp ${HOTLINE_DISPLAY} (Chị Nguyễn Thuý).`);
+          return;
+        }
+
         showToast('Đã sao chép nội dung cần tư vấn! Đang mở Zalo Chị Nguyễn Thuý (0793.803.905)...');
 
         setTimeout(() => {
@@ -212,6 +262,10 @@
     const copyBtns = document.querySelectorAll('[data-copy-phone]');
     copyBtns.forEach((btn) => {
       btn.addEventListener('click', async () => {
+        if (isActionLocked) return;
+        isActionLocked = true;
+        setTimeout(() => { isActionLocked = false; }, 800);
+
         const copied = await copyToClipboard(HOTLINE_RAW);
         trackConversion('copy_phone_number');
         if (copied) {
@@ -232,12 +286,30 @@
 
     const zaloLinks = document.querySelectorAll('[data-track-zalo]');
     zaloLinks.forEach((link) => {
-      link.addEventListener('click', async () => {
+      link.addEventListener('click', async (e) => {
+        if (isActionLocked) {
+          e.preventDefault();
+          return;
+        }
+        isActionLocked = true;
+        setTimeout(() => { isActionLocked = false; }, 1000);
+
         const placement = link.getAttribute('data-track-zalo') || 'general';
         await copyToClipboard(HOTLINE_RAW);
         trackConversion('click_zalo_direct', { note: placement });
+
+        if (navigator.onLine === false) {
+          e.preventDefault();
+          showToast(`Thiết bị đang mất mạng! Đã sao chép SĐT ${HOTLINE_DISPLAY} — vui lòng gọi trực tiếp Chị Nguyễn Thuý.`);
+          return;
+        }
+
         showToast(`Đang mở Zalo Chị Nguyễn Thuý (${HOTLINE_DISPLAY})...`);
       });
+    });
+
+    window.addEventListener('offline', () => {
+      showToast(`Mất kết nối Internet. Bạn vẫn có thể gọi trực tiếp Hotline ${HOTLINE_DISPLAY} (Chị Nguyễn Thuý).`);
     });
   }
 

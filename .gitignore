@@ -3,13 +3,37 @@
 .env.*
 .env.local
 .dev.vars
+*.pem
+*.key
+*.cert
+*serviceAccountKey*.json
+*firebase*.json
+*supabase*.env
+credentials.json
+client_secret*.json
+id_rsa*
+*.keystore
+*.jks
 
-# Vercel & Deployment Artifacts
+# Vercel, Build & Large Binary Artifacts (> 25MB)
+node_modules/
 .vercel/
 .output/
 dist/
+build/
+*.apk
+*.aab
+*.ipa
+*.mp4
+*.mov
+*.avi
+*.zip
+*.tar.gz
+*.7z
 
-# OS & Editor
+# AI Temporary Cache & OS
+.gemini/
+.claude/
 .DS_Store
 Thumbs.db
 *.log
