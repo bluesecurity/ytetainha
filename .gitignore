@@ -1,0 +1,15 @@
+# Zero-Leak Secret Hygiene (.gitignore)
+.env
+.env.*
+.env.local
+.dev.vars
+
+# Vercel & Deployment Artifacts
+.vercel/
+.output/
+dist/
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.log
