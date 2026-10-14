@@ -1,0 +1,18 @@
+{
+  "name": "Tận Tâm Chăm Sóc - Dịch Vụ Y Tế Tại Nhà Vũng Tàu & Tam Thắng",
+  "short_name": "Y Tế Tại Nhà",
+  "description": "Dịch vụ chăm sóc sức khỏe người cao tuổi, đo huyết áp, đường huyết, thay băng vết thương tại nhà khu vực Phường Vũng Tàu và Phường Tam Thắng. Liên hệ Chị Nguyễn Thuý: 0793.803.905.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6faf7",
+  "theme_color": "#133824",
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "/assets/brand-logo.png",
+      "sizes": "120x106",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
