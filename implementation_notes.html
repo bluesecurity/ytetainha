@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Implementation Notes - Tận Tâm Chăm Sóc Landing Page</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 24px;
+      line-height: 1.6;
+      color: #1c2b22;
+      background: #f7faf8;
+    }
+    h1, h2 { color: #133926; }
+    .card {
+      background: #ffffff;
+      border: 1px solid #d5e2d9;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    code {
+      background: #eaf2ed;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Implementation Notes &amp; Living Spec: Tận Tâm Chăm Sóc</h1>
+
+  <div class="card">
+    <h2>1. Unspecified &amp; Implicit Decisions</h2>
+    <ul>
+      <li><strong>Zero-Framework Pure Static Architecture:</strong> Chọn HTML5 + CSS3 (OKLCH Tokens) + Vanilla ES6 JS thay vì Next.js/React nặng nề để đạt tốc độ tải tức thì (&lt; 0.5s LCP) trên Vercel, tối ưu điểm chất lượng trang đích (Landing Page Experience) của Google Ads.</li>
+      <li><strong>Visual Asset Extraction:</strong> Bóc tách và làm sạch ảnh chụp nhân viên y tế chăm sóc bà cụ (<code>assets/hero-care-clean.jpg</code>) và biểu tượng ngôi nhà trái tim y tế (<code>assets/brand-logo.png</code>) trực tiếp từ tờ rơi gốc của khách hàng, đồng thời giữ nguyên tờ rơi gốc (<code>assets/poster-tan-tam-cham-soc.jpg</code>) ở mục đối chiếu thông tin chính thức.</li>
+      <li><strong>Zalo Concierge Pre-fill Builder:</strong> Bổ sung công cụ chọn nhanh Khu vực (Phường Vũng Tàu / Phường Tam Thắng) và Dịch vụ quan tâm để tự động tạo câu nhắn hoàn chỉnh, sao chép vào bộ nhớ tạm trước khi mở Zalo <code>0793.803.905</code>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>2. Deviations from Raw Copy (Ads Policy Hardening)</h2>
+    <ul>
+      <li><strong>Google Ads Online Pharmacy Policy Compliance:</strong> Cụm từ gốc <em>"mua &amp; giao thuốc theo đơn / đi chợ thuốc"</em> được bổ sung giải trình rõ ràng là <em>"Hỗ trợ hậu cần &amp; nhận thuốc hộ theo đơn chỉ định sẵn của bác sĩ (không bán thuốc trực tuyến, không tự ý kê đơn)"</em> nhằm tránh bị bot Google Ads gắn cờ vi phạm <em>Unapproved Pharmaceuticals</em>.</li>
+      <li><strong>Meta Ads Personal Attributes Compliance:</strong> Chuyển cách đặt câu hỏi trực diện gây phán xét sức khỏe cá nhân sang thông điệp đồng hành gia đình ấm áp, tích cực.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>3. Considered Trade-offs</h2>
+    <ul>
+      <li><strong>Không dùng Backend Form lưu Database:</strong> Tránh nguy cơ rò rỉ dữ liệu bệnh lý cá nhân (PII), tránh spam bot làm tràn giới hạn Serverless/DB trên Vercel Hobby, và phù hợp 100% với mục tiêu của Đại Ka là dẫn khách gọi thẳng SĐT hoặc nhắn Zalo <code>0793.803.905</code> để Chị Nguyễn Thuý tự chốt tư vấn.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>4. Maintenance &amp; Ads Tracking Notes</h2>
+    <ul>
+      <li><strong>Tracking Events:</strong> File <code>app.js</code> đã phát sẵn sự kiện vào <code>window.dataLayer</code>, <code>window.gtag</code>, và <code>window.fbq</code> cho các hành động: <code>click_call_hotline</code>, <code>click_zalo_direct</code>, <code>click_zalo_consult</code>, và <code>copy_phone_number</code> (đã áp dụng PII Masking).</li>
+      <li><strong>Deployment:</strong> Đẩy trực tiếp thư mục lên Vercel (`vercel --prod` hoặc nối Git repo).</li>
+    </ul>
+  </div>
+</body>
+</html>
