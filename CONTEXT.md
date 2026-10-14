@@ -1,8 +1,8 @@
 # CONTEXT.md — Dự Án Landing Page Y Tế Tại Nhà Vũng Tàu & Tam Thắng (Tận Tâm Chăm Sóc)
 
 ## 1. Rollback Anchor & Trạng Thái Khởi Tạo
-- **Git Branch:** `main` (Greenfield Repository)
-- **Rollback Anchor Tag/State:** `INIT_GREENFIELD_ANCHOR` (Trước khi triển khai MVP Slice)
+- **Git Branch:** `master`
+- **Rollback Anchor Commit Hash:** `d95f73a` (Trước khi thực thi Milestone 2: Cloud Deploy & Remote Push)
 - **Mục tiêu cốt lõi:** Landing Page tĩnh tốc độ cao triển khai trên Vercel cho dịch vụ **Tận Tâm Chăm Sóc** (Chị Nguyễn Thuý - `0793.803.905`), tối ưu hóa tỷ lệ chuyển đổi **Gọi Điện / Nhắn Zalo** và tuân thủ 100% chính sách kiểm duyệt của **Google Ads & Facebook (Meta) Ads** ngành Y tế.
 
 ## 2. Domain Model & Thông Tin Nghiệp Vụ Cốt Lõi
