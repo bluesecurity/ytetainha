@@ -26,6 +26,10 @@
     } catch (_) {}
   }
 
+  /**
+   * @param {Set<string | null>} validWards
+   * @param {Set<string | null>} validServices
+   */
   function loadDraftState(validWards, validServices) {
     try {
       const parsed = JSON.parse(sessionStorage.getItem(DRAFT_STORAGE_KEY) || 'null');
@@ -35,7 +39,7 @@
       }
       if (Array.isArray(parsed.services)) {
         const filtered = parsed.services.filter(
-          (s) => typeof s === 'string' && s.trim() && (!validServices.size || validServices.has(s))
+          (/** @type {unknown} */ s) => typeof s === 'string' && s.trim() && (!validServices.size || validServices.has(s))
         );
         if (filtered.length > 0) state.services = new Set(filtered);
       }
@@ -45,6 +49,7 @@
 
   /**
    * Che mờ số điện thoại hoặc ghi chú nếu chứa chuỗi số (Runtime Privacy Pillar 4)
+   * @param {unknown} input
    */
   function sanitizeTextForLog(input) {
     if (!input) return '';
@@ -53,6 +58,8 @@
 
   /**
    * Gửi sự kiện chuyển đổi chuẩn Google Ads (gtag/dataLayer) & Meta Pixel (fbq)
+   * @param {string} eventName
+   * @param {{ note?: string | null }} [meta]
    */
   function trackConversion(eventName, meta = {}) {
     const safeMeta = {
@@ -62,25 +69,28 @@
       note_masked: sanitizeTextForLog(meta.note || '')
     };
 
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
+    const win = /** @type {Window & typeof globalThis & { dataLayer?: Record<string, unknown>[]; gtag?: (...args: unknown[]) => void; fbq?: (...args: unknown[]) => void }} */ (window);
+    win.dataLayer = win.dataLayer || [];
+    win.dataLayer.push({
       event: eventName,
       ...safeMeta
     });
 
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', eventName, safeMeta);
+    if (typeof win.gtag === 'function') {
+      win.gtag('event', eventName, safeMeta);
     }
 
-    if (typeof window.fbq === 'function') {
-      window.fbq('trackCustom', eventName, safeMeta);
+    if (typeof win.fbq === 'function') {
+      win.fbq('trackCustom', eventName, safeMeta);
     }
   }
 
   /**
    * Hiển thị thông báo Toast
    */
+  /** @type {ReturnType<typeof setTimeout> | null} */
   let toastTimer = null;
+  /** @param {string} message */
   function showToast(message) {
     const toastEl = document.getElementById('app-toast');
     const toastText = document.getElementById('app-toast-text');
@@ -97,6 +107,7 @@
 
   /**
    * Sao chép văn bản an toàn (Hỗ trợ cả In-App WebView của Facebook/Zalo Ads)
+   * @param {string} text
    */
   async function copyToClipboard(text) {
     try {
@@ -189,11 +200,11 @@
       });
     });
 
-    const noteInput = document.getElementById('consult-note-input');
+    const noteInput = /** @type {HTMLInputElement | HTMLTextAreaElement | null} */ (document.getElementById('consult-note-input'));
     if (noteInput) {
       if (state.note) noteInput.value = state.note;
-      noteInput.addEventListener('input', (e) => {
-        state.note = e.target.value || '';
+      noteInput.addEventListener('input', () => {
+        state.note = noteInput.value || '';
         saveDraftState();
         updatePreviewUI();
       });
@@ -228,7 +239,7 @@
       zaloSubmitBtn.addEventListener('click', async () => {
         if (isActionLocked) return;
 
-        const consentBox = document.getElementById('consent-checkbox');
+        const consentBox = /** @type {HTMLInputElement | null} */ (document.getElementById('consent-checkbox'));
         if (consentBox && !consentBox.checked) {
           showToast('Vui lòng tích chọn đồng ý điều khoản tư vấn trước khi gửi yêu cầu.');
           consentBox.focus();
@@ -328,7 +339,7 @@
     openBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const modalId = btn.getAttribute('data-open-modal');
-        const dialog = modalId ? document.getElementById(modalId) : null;
+        const dialog = /** @type {HTMLDialogElement | null} */ (modalId ? document.getElementById(modalId) : null);
         if (dialog && typeof dialog.showModal === 'function' && !dialog.open) {
           dialog.showModal();
         }
@@ -343,7 +354,7 @@
       });
     });
 
-    const dialogs = document.querySelectorAll('dialog.policy-dialog');
+    const dialogs = /** @type {NodeListOf<HTMLDialogElement>} */ (document.querySelectorAll('dialog.policy-dialog'));
     dialogs.forEach((dialog) => {
       dialog.addEventListener('click', (e) => {
         const rect = dialog.getBoundingClientRect();
