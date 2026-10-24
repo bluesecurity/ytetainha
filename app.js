@@ -166,7 +166,6 @@
       });
     });
 
-    const serviceBtns = document.querySelectorAll('[data-service-chip]');
     serviceBtns.forEach((btn) => {
       const chipName = btn.getAttribute('data-service-chip');
       if (chipName) {
