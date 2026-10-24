@@ -13,7 +13,7 @@
   const DRAFT_STORAGE_KEY = 'ytetainha_consult_draft_v1';
   const state = {
     ward: 'Phường Vũng Tàu',
-    services: new Set(['Theo dõi huyết áp & đường huyết định kỳ']),
+    services: new Set(['Theo dõi chỉ số sức khỏe định kỳ (Mạch, nhiệt độ, huyết áp, SpO2, đường huyết, khám tim phổi)']),
     note: ''
   };
   let isActionLocked = false;

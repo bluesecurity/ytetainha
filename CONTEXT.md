@@ -2,7 +2,7 @@
 
 ## 1. Rollback Anchor & Trạng Thái Khởi Tạo
 - **Git Branch:** `main`
-- **Rollback Anchor Commit Hash:** `896c023` (Trước khi hardening hành vi chống bấm đúp, mất mạng, lưu nháp `sessionStorage` khi thoát dở chừng & nâng cấp `.gitignore`)
+- **Rollback Anchor Commit Hash:** `d9def4d` (Trước khi cập nhật nội dung "Thực hiện đo: Mạch, nhiệt độ, huyết áp, nhịp thở, nồng độ oxy máu, đường huyết, khám tim, phổi" theo giấy viết tay của Đại Ka & chuẩn hóa từ khóa AdWords + thanh `.mobile-sticky-bar`)
 - **Mục tiêu cốt lõi:** Landing Page tĩnh tốc độ cao triển khai trên Vercel cho dịch vụ **Tận Tâm Chăm Sóc** (Chị Nguyễn Thuý - `0793.803.905`), tối ưu hóa tỷ lệ chuyển đổi **Gọi Điện / Nhắn Zalo** và tuân thủ 100% chính sách kiểm duyệt của **Google Ads & Facebook (Meta) Ads** ngành Y tế.
 
 ## 2. Domain Model & Thông Tin Nghiệp Vụ Cốt Lõi
@@ -10,12 +10,12 @@
 - **Thông điệp chủ đạo:** *"Sức khỏe tốt hơn – Cuộc sống an vui hơn"*
 - **Người phụ trách tư vấn & điều phối:** Chị Nguyễn Thuý
 - **Hotline / Zalo duy nhất:** `0793.803.905` (`tel:0793803905` / `https://zalo.me/0793803905`)
-- **Phạm vi phục vụ địa lý:** Toàn bộ khu vực **Phường Vũng Tàu** và **Phường Tam Thắng**.
+- **Phạm vi phục vụ địa lý:** Toàn bộ khu vực **Phường Vũng Tàu** và **Phường Tam Thắng** (TP. Vũng Tàu, Tỉnh Bà Rịa - Vũng Tàu).
 - **5 Nhóm dịch vụ hỗ trợ tại nhà:**
-  1. Theo dõi chỉ số sức khỏe định kỳ (Đo huyết áp, kiểm tra đường huyết mao mạch, theo dõi sinh hiệu cơ bản).
+  1. Theo dõi chỉ số sức khỏe định kỳ (**Thực hiện đo: Mạch, nhiệt độ, huyết áp, nhịp thở, nồng độ oxy máu, đường huyết, khám tim, phổi**; theo dõi sát sao các chỉ số cơ bản của cơ thể để thông báo gia đình kịp thời khi có dấu hiệu bất thường).
   2. Chăm sóc & hỗ trợ người cao tuổi, người có bệnh lý mạn tính (tim mạch, tiểu đường, huyết áp), phục hồi thể trạng sau ốm.
   3. Thực hiện thủ thuật điều dưỡng tại nhà (Thay băng, rửa và chăm sóc vết thương, vết loét tì đè, vết mổ theo hướng dẫn chuyên môn).
-  4. Hỗ trợ hậu cần đi chợ thuốc & nhận thuốc hộ gia đình theo đúng đơn kê sẵn của bác sĩ (tuân thủ chính sách Google Ads: không kê đơn, không bán thuốc trực tuyến).
+  4. Hỗ trợ hậu cần nhận vật tư y tế & đi chợ thuốc hộ gia đình theo đúng toa chỉ định sẵn của bác sĩ (tuân thủ chính sách Google Ads: không kê đơn, không bán thuốc trực tuyến).
   5. Tư vấn & hướng dẫn chăm sóc sức khỏe (Chế độ dinh dưỡng, vận động phục hồi, phòng ngừa biến chứng tại nhà).
 
 ## 3. Kiến Trúc Kỹ Thuật (Zero-Bloat Static Architecture)
