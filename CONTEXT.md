@@ -2,7 +2,7 @@
 
 ## 1. Rollback Anchor & Trạng Thái Khởi Tạo
 - **Git Branch:** `main`
-- **Rollback Anchor Commit Hash:** `d9def4d` (Trước khi cập nhật nội dung "Thực hiện đo: Mạch, nhiệt độ, huyết áp, nhịp thở, nồng độ oxy máu, đường huyết, khám tim, phổi" theo giấy viết tay của Đại Ka & chuẩn hóa từ khóa AdWords + thanh `.mobile-sticky-bar`)
+- **Rollback Anchor Commit Hash:** `e77894f` (Trước khi chuẩn hóa pháp lý Luật Khám chữa bệnh 2023 & Google Ads Tài khoản Cá nhân: đổi `"khám tim, phổi"` -> `"kiểm tra nhịp tim, phổi (hô hấp)"`, xóa chữ `"trung tâm"`, đổi Schema sang `LocalBusiness`)
 - **Mục tiêu cốt lõi:** Landing Page tĩnh tốc độ cao triển khai trên Vercel cho dịch vụ **Tận Tâm Chăm Sóc** (Chị Nguyễn Thuý - `0793.803.905`), tối ưu hóa tỷ lệ chuyển đổi **Gọi Điện / Nhắn Zalo** và tuân thủ 100% chính sách kiểm duyệt của **Google Ads & Facebook (Meta) Ads** ngành Y tế.
 
 ## 2. Domain Model & Thông Tin Nghiệp Vụ Cốt Lõi

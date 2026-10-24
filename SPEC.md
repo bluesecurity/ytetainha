@@ -10,8 +10,8 @@
 ---
 
 ## 2. Danh Mục 5 Dịch Vụ Cốt Lõi Trên Trang Đích (Chuẩn Hóa AdWords Healthcare Policy)
-1. **Theo dõi chỉ số sức khỏe định kỳ (Đã cập nhật theo bản viết tay mới):**
-   - *"Thực hiện đo: Mạch, nhiệt độ, huyết áp, nhịp thở, nồng độ oxy máu, đường huyết, khám tim, phổi."*
+1. **Theo dõi chỉ số sức khỏe định kỳ (Đã cập nhật theo bản viết tay mới & chuẩn hóa Luật Khám chữa bệnh 2023):**
+   - *"Thực hiện đo: Mạch, nhiệt độ, huyết áp, nhịp thở, nồng độ oxy máu, đường huyết, kiểm tra nhịp tim, phổi (hô hấp)."*
    - *"Theo dõi sát sao các chỉ số cơ bản của cơ thể để thông báo gia đình kịp thời khi có dấu hiệu bất thường."*
 2. **Chăm sóc người cao tuổi & hỗ trợ bệnh lý mạn tính:**
    - Chăm sóc toàn diện cho ông bà, bố mẹ lớn tuổi hoặc người có bệnh lý mạn tính (tim mạch, tiểu đường, huyết áp); hỗ trợ tập luyện phục hồi thể trạng sau ốm.

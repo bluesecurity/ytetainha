@@ -8,9 +8,9 @@
 
 ### Milestone 1: Giao Diện, Luồng Chuyển Đổi SĐT/Zalo & Nội Dung Chuyên Môn (ĐÃ XONG)
 - [x] **Task 1.1:** Thiết kế & hiện thực hóa giao diện `index.html` + `styles.css` chuẩn Mobile-First, bảng màu OKLCH Forest Green, thanh nổi cố định dưới đáy màn hình điện thoại (`.mobile-sticky-bar`).
-- [x] **Task 1.2 (Cập nhật theo Hình 2 của Đại Ka):** Cập nhật nội dung mục **Theo dõi chỉ số sức khỏe định kỳ** thành:
-  > *"Thực hiện đo: Mạch, nhiệt độ, huyết áp, nhịp thở, nồng độ oxy máu, đường huyết, khám tim, phổi."*
-  Đồng bộ trên cả thẻ dịch vụ Bento Card, Meta Description, Schema `MedicalBusiness` và Chip chọn nhanh Zalo.
+- [x] **Task 1.2 (Cập nhật theo Hình 2 của Đại Ka & Chuẩn hóa Luật Khám chữa bệnh 2023):** Cập nhật nội dung mục **Theo dõi chỉ số sức khỏe định kỳ** thành:
+  > *"Thực hiện đo: Mạch, nhiệt độ, huyết áp, nhịp thở, nồng độ oxy máu, đường huyết, kiểm tra nhịp tim, phổi (hô hấp)."*
+  Đồng thời xóa toàn bộ chữ *"trung tâm"*, *"khám bệnh"*, *"thủ thuật"* và chuyển Schema JSON-LD sang `LocalBusiness` để bảo vệ Cô Nguyễn Thuý trước rủi ro thanh tra hành chính và tương thích 100% với **Tài khoản Google Ads Cá nhân**.
 - [x] **Task 1.3 (Vá lỗi cắt chữ nút gọi trên điện thoại thực tế trong Hình 1 của Đại Ka):** Cố định kích thước chữ `clamp(12px, 3.3vw, 14px)` và tối ưu `grid-template-columns: minmax(0, 1.18fr) minmax(0, 1.05fr) auto` cho `.mobile-sticky-bar` để nút **"Gọi Chị Thuý"** hiển thị trọn vẹn 100% ngay cả khi điện thoại Android bật chế độ Phóng to phông chữ hệ thống.
 
 ### Milestone 2: Chuẩn Hóa Chính Sách Google Ads (AdWords) Ngành Y Tế (ĐÃ XONG)
