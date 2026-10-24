@@ -26,13 +26,18 @@
     } catch (_) {}
   }
 
-  function loadDraftState() {
+  function loadDraftState(validWards, validServices) {
     try {
       const parsed = JSON.parse(sessionStorage.getItem(DRAFT_STORAGE_KEY) || 'null');
       if (!parsed) return;
-      if (typeof parsed.ward === 'string' && parsed.ward.trim()) state.ward = parsed.ward;
-      if (Array.isArray(parsed.services) && parsed.services.length > 0) {
-        state.services = new Set(parsed.services.filter((s) => typeof s === 'string' && s.trim()));
+      if (typeof parsed.ward === 'string' && (!validWards.size || validWards.has(parsed.ward))) {
+        state.ward = parsed.ward;
+      }
+      if (Array.isArray(parsed.services)) {
+        const filtered = parsed.services.filter(
+          (s) => typeof s === 'string' && s.trim() && (!validServices.size || validServices.has(s))
+        );
+        if (filtered.length > 0) state.services = new Set(filtered);
       }
       if (typeof parsed.note === 'string') state.note = parsed.note.slice(0, 220);
     } catch (_) {}
@@ -143,9 +148,12 @@
    * Khởi tạo các nút chọn Khu vực (Ward) và Dịch vụ (Services)
    */
   function initQuickBuilder() {
-    loadDraftState();
-
     const wardBtns = document.querySelectorAll('[data-ward-select]');
+    const serviceBtns = document.querySelectorAll('[data-service-chip]');
+    const validWards = new Set(Array.from(wardBtns, (b) => b.getAttribute('data-ward-select')).filter(Boolean));
+    const validServices = new Set(Array.from(serviceBtns, (b) => b.getAttribute('data-service-chip')).filter(Boolean));
+    loadDraftState(validWards, validServices);
+
     wardBtns.forEach((btn) => {
       const btnWard = btn.getAttribute('data-ward-select');
       btn.setAttribute('aria-pressed', btnWard === state.ward ? 'true' : 'false');
@@ -322,7 +330,7 @@
       btn.addEventListener('click', () => {
         const modalId = btn.getAttribute('data-open-modal');
         const dialog = modalId ? document.getElementById(modalId) : null;
-        if (dialog && typeof dialog.showModal === 'function') {
+        if (dialog && typeof dialog.showModal === 'function' && !dialog.open) {
           dialog.showModal();
         }
       });
