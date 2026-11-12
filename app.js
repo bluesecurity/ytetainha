@@ -16,7 +16,8 @@
     services: new Set(['Theo dõi chỉ số sức khỏe định kỳ (Mạch, nhiệt độ, huyết áp, SpO2, đường huyết, nhịp tim, hô hấp)']),
     note: ''
   };
-  let isActionLocked = false;
+  /** @type {WeakSet<Element>} */
+  const lockedElements = new WeakSet();
 
   function saveDraftState() {
     try {
@@ -233,11 +234,11 @@
       });
     });
 
-    // Nút Copy nội dung & Mở Zalo (có chống bấm đúp & chống lỗi mất mạng)
+    // Nút Copy nội dung & Mở Zalo (kích hoạt mở Zalo đồng bộ trong user gesture tránh popup blocker Mobile/WebView)
     const zaloSubmitBtn = document.getElementById('btn-submit-zalo');
     if (zaloSubmitBtn) {
       zaloSubmitBtn.addEventListener('click', async () => {
-        if (isActionLocked) return;
+        if (lockedElements.has(zaloSubmitBtn)) return;
 
         const consentBox = /** @type {HTMLInputElement | null} */ (document.getElementById('consent-checkbox'));
         if (consentBox && !consentBox.checked) {
@@ -246,27 +247,38 @@
           return;
         }
 
-        isActionLocked = true;
+        lockedElements.add(zaloSubmitBtn);
         zaloSubmitBtn.setAttribute('aria-busy', 'true');
         setTimeout(() => {
-          isActionLocked = false;
+          lockedElements.delete(zaloSubmitBtn);
           zaloSubmitBtn.removeAttribute('aria-busy');
         }, 1200);
 
         const msg = buildConsultMessage();
-        await copyToClipboard(msg);
         trackConversion('click_zalo_consult', { note: state.note });
 
         if (navigator.onLine === false) {
+          await copyToClipboard(msg);
           showToast(`Thiết bị đang mất mạng! Đã sao chép nội dung — vui lòng gọi trực tiếp ${HOTLINE_DISPLAY} (Chị Nguyễn Thuý).`);
           return;
         }
 
-        showToast('Đã sao chép nội dung cần tư vấn! Đang mở Zalo Chị Nguyễn Thuý (0793.803.905)...');
+        const copyPromise = copyToClipboard(msg);
+        const openedWindow = window.open(ZALO_URL, '_blank');
+        if (openedWindow) {
+          openedWindow.opener = null;
+        }
+        const copied = await copyPromise;
 
-        setTimeout(() => {
-          window.open(ZALO_URL, '_blank', 'noopener,noreferrer');
-        }, 350);
+        showToast(
+          copied
+            ? 'Đã sao chép nội dung cần tư vấn! Đang mở Zalo Chị Nguyễn Thuý (0793.803.905)...'
+            : `Đang mở Zalo Chị Nguyễn Thuý (${HOTLINE_DISPLAY})...`
+        );
+
+        if (!openedWindow) {
+          window.location.assign(ZALO_URL);
+        }
       });
     }
 
@@ -280,9 +292,9 @@
     const copyBtns = document.querySelectorAll('[data-copy-phone]');
     copyBtns.forEach((btn) => {
       btn.addEventListener('click', async () => {
-        if (isActionLocked) return;
-        isActionLocked = true;
-        setTimeout(() => { isActionLocked = false; }, 800);
+        if (lockedElements.has(btn)) return;
+        lockedElements.add(btn);
+        setTimeout(() => { lockedElements.delete(btn); }, 800);
 
         const copied = await copyToClipboard(HOTLINE_RAW);
         trackConversion('copy_phone_number');
@@ -305,23 +317,24 @@
     const zaloLinks = document.querySelectorAll('[data-track-zalo]');
     zaloLinks.forEach((link) => {
       link.addEventListener('click', async (e) => {
-        if (isActionLocked) {
+        if (lockedElements.has(link)) {
           e.preventDefault();
           return;
         }
-        isActionLocked = true;
-        setTimeout(() => { isActionLocked = false; }, 1000);
+        lockedElements.add(link);
+        setTimeout(() => { lockedElements.delete(link); }, 1000);
 
         const placement = link.getAttribute('data-track-zalo') || 'general';
-        await copyToClipboard(HOTLINE_RAW);
-        trackConversion('click_zalo_direct', { note: placement });
-
         if (navigator.onLine === false) {
           e.preventDefault();
+          await copyToClipboard(HOTLINE_RAW);
+          trackConversion('click_zalo_direct', { note: placement });
           showToast(`Thiết bị đang mất mạng! Đã sao chép SĐT ${HOTLINE_DISPLAY} — vui lòng gọi trực tiếp Chị Nguyễn Thuý.`);
           return;
         }
 
+        void copyToClipboard(HOTLINE_RAW);
+        trackConversion('click_zalo_direct', { note: placement });
         showToast(`Đang mở Zalo Chị Nguyễn Thuý (${HOTLINE_DISPLAY})...`);
       });
     });
