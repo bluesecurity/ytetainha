@@ -16,4 +16,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ytetainha-alpha.vercel.app/sitemap.xml
+Sitemap: https://ytetainhavungtau.vercel.app/sitemap.xml

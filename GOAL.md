@@ -33,4 +33,4 @@
 ---
 
 ## 3. Các Hạng Mục Hoãn Sang Phase 2 (Deferred / Không Bắt Buộc Cho Bản Release Này)
-- **Tên miền riêng (Custom Domain `.vn` / `.com`):** Hiện tại domain `https://ytetainha-alpha.vercel.app` hoàn toàn hợp lệ và chạy được Google Ads ngay. Nếu sau này muốn tăng thêm nhận diện thương hiệu tại Vũng Tàu, có thể trỏ thêm domain riêng (ví dụ `ytetainhavungtau.vn`) vào Vercel.
+- **Tên miền riêng (Custom Domain `.vn` / `.com`):** Hiện tại domain `https://ytetainhavungtau.vercel.app` (đã 301 redirect từ `ytetainha-alpha.vercel.app`) hoàn toàn hợp lệ và chạy được Google Ads ngay. Nếu sau này muốn tăng thêm nhận diện thương hiệu tại Vũng Tàu, có thể trỏ thêm domain riêng (ví dụ `ytetainhavungtau.vn`) vào Vercel.

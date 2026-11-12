@@ -2,7 +2,7 @@
 
 ## 1. Rollback Anchor & Trạng Thái Khởi Tạo
 - **Git Branch:** `main`
-- **Rollback Anchor Commit Hash:** `dcc157b` (Trước khi vá lỗi chặn popup mở Zalo sau `await`/`setTimeout` trên Mobile/WebView và tách khóa `isActionLocked` theo từng nút)
+- **Rollback Anchor Commit Hash:** `8313862` (Trước khi chuẩn hóa Canonical Domain chính sang `https://ytetainhavungtau.vercel.app/` kèm 301 Redirect từ `ytetainha-alpha.vercel.app`)
 - **Mục tiêu cốt lõi:** Landing Page tĩnh tốc độ cao triển khai trên Vercel cho dịch vụ **Tận Tâm Chăm Sóc** (Chị Nguyễn Thuý - `0793.803.905`), tối ưu hóa tỷ lệ chuyển đổi **Gọi Điện / Nhắn Zalo** và tuân thủ 100% chính sách kiểm duyệt của **Google Ads & Facebook (Meta) Ads** ngành Y tế.
 
 ## 2. Domain Model & Thông Tin Nghiệp Vụ Cốt Lõi

@@ -32,7 +32,7 @@
 | `styles.css` | Hệ thống Design Tokens OKLCH, Typography (`Lora` + `Be Vietnam Pro`), Responsive Grid (`360px` -> `1280px`), Safe-Area Insets, chống tràn ngang, Touch Targets `>= 48x48px`, và khóa cỡ chữ `px/vw` cho `.mobile-sticky-bar` chống cắt chữ khi điện thoại bật phóng to font. | Đã hoàn thiện (`28.6 KB`) |
 | `app.js` | Logic chọn khu vực/dịch vụ, lưu nháp `sessionStorage`, tự động tạo tin nhắn tư vấn, Clipboard API (kèm fallback cho WebView), chống bấm đúp, xử lý mất mạng, đẩy sự kiện chuyển đổi (`window.dataLayer`, `gtag`, `fbq`) có che mờ PII (`sanitizeTextForLog`). | Đã hoàn thiện (`11.4 KB`) |
 | `manifest.webmanifest` | Cấu hình Web App Manifest cho Mobile PWA (`display: standalone`, `theme_color: #133824`, bộ icon vuông `192x192` & `512x512`). | Đã hoàn thiện (`918 B`) |
-| `robots.txt` & `sitemap.xml` | Cấp quyền thu thập dữ liệu cho `AdsBot-Google`, `AdsBot-Google-Mobile`, `Facebot` trỏ về `https://ytetainha-alpha.vercel.app`. | Đã hoàn thiện |
+| `robots.txt` & `sitemap.xml` | Cấp quyền thu thập dữ liệu cho `AdsBot-Google`, `AdsBot-Google-Mobile`, `Facebot` trỏ về `https://ytetainhavungtau.vercel.app`. | Đã hoàn thiện |
 | `vercel.json` | Cấu hình Clean URLs, Security Headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`) và Cache-Control bất biến cho `/assets/*`. | Đã hoàn thiện |
 | `assets/*` | `hero-care-clean.jpg` (`363x312`), `brand-logo.png` (`120x106`), `icon-192.png` (`192x192`), `icon-512.png` (`512x512`), `apple-touch-icon.png` (`180x180`), `poster-tan-tam-cham-soc.jpg` (`682x1024`). | Đã có đủ |
 | `.env.local` | Lưu trữ thông tin xác thực cấp dự án (`VERCEL_TOKEN`, `GITHUB_TOKEN`, `GITEA_URL`, `GITEA_TOKEN`, `GITEA_USER`). | Đã có (Bảo vệ bởi `.gitignore`) |
